@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Xor:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Xor_jar</output-path>
+    <root id="archive" name="Xor.jar">
+      <element id="module-output" name="Xor" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/args4j-2.0.12.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
