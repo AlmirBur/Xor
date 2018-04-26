@@ -1,28 +1,27 @@
-/**
-        import org.kohsuke.args4j.Argument;
-        import org.kohsuke.args4j.CmdLineException;
-        import org.kohsuke.args4j.CmdLineParser;
-        import org.kohsuke.args4j.Option;
 
-        import java.io.IOException;
+import org.kohsuke.args4j.Argument;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
+
+import java.io.IOException;
 
 public class EncoderLauncher {
 
-
     @Option(name = "-c", usage = "code File")
-    private boolean unpackFlag;
+    private String cKey;
 
     @Option(name = "-d", usage = "decode File")
-    private boolean packFlag;
+    private String dKey;
 
-    @Option(name = "-out", required = true, usage = "Name of input file")
+    @Argument(required = true, usage = "Name of input file")
     private String inputFileName;
 
-    @Argument(required = true, usage = "Name of output file")
+    @Option(name = "-o", required = true, usage = "Name of output file")
     private String outputFileName;
 
     public static void main(String[] args) {
-        new RecoderLauncher().launch(args);
+        new EncoderLauncher().launch(args);
     }
 
     private void launch(String[] args) {
@@ -32,15 +31,24 @@ public class EncoderLauncher {
             parser.parseArgument(args);
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
-            System.err.println("java -jar Xor.jar -c CodingI -d DecodingI InputName OutputName");
+            System.err.println("java -jar Xor.jar [-c|-d] -o outputname.txt inputname.txt");
             parser.printUsage(System.err);
             return;
         }
 
-        Encoder encoder = new Encoder(inputEncoding, outputEncoding);
+        //{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'}; if key is not valid...
+
+        if (cKey == null && dKey == null /* &keyIsNotValid */) System.err.println("invalid key");
+        char[] key;
+        if (cKey != null) {
+            key = cKey.toCharArray();
+        } else {
+            key = dKey.toCharArray();
+        }
+
+        Encoder encoder = new Encoder();
         try {
-            int result = recoder.recode(inputFileName, outputFileName);
-            System.out.println("Total of " + result + " symbols recoded");
+            encoder.code(inputFileName, outputFileName, key);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
