@@ -12,7 +12,7 @@ public class Encoder {
                     count++;
                     sym = reader.read();
                 }
-                return -1;
+                return 1;
             }
         }
     }
