@@ -2,7 +2,7 @@ import java.io.*;
 
 public class Encoder {
 
-    public int code(InputStream in, String outputFileName, char[] key) throws IOException {
+    private int code(InputStream in, String outputFileName, char[] key) throws IOException {
         try (InputStreamReader reader = new InputStreamReader(in)) {
             try (FileWriter writer = new FileWriter(outputFileName)) {
                 int sym = reader.read();
