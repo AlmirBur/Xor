@@ -1,3 +1,4 @@
+package Encoder;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
@@ -11,7 +12,7 @@ public class EncoderLauncher {
     @Option(name = "-c", usage = "code File")
     private String cKey;
 
-    @Option(name = "-d", usage = "decode File")
+    @Option(name = "-d", forbids = "-c", usage = "decode File")
     private String dKey;
 
     @Argument(required = true, usage = "Name of input file")
@@ -31,24 +32,37 @@ public class EncoderLauncher {
             parser.parseArgument(args);
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
-            System.err.println("java -jar Xor.jar [-c|-d] -o outputname.txt inputname.txt");
+            System.err.println("java -jar Xor.jar [-c|-d] inputname.txt -o outputname.txt");
             parser.printUsage(System.err);
             return;
         }
 
-        //{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'}; if key is not valid...
+        if (cKey == null && dKey == null) System.err.println("invalid key");
 
-        if (cKey == null && dKey == null /* &keyIsNotValid */) System.err.println("invalid key");
-        char[] key;
+        String key;
         if (cKey != null) {
-            key = cKey.toCharArray();
+            key = cKey;
         } else {
-            key = dKey.toCharArray();
+            key = dKey;
         }
 
-        Encoder encoder = new Encoder();
+        boolean keyIsNotValid = false;
+        for (int i = 0; i < key.length(); i++) {
+            if (!"0123456789ABCDEF".contains(key.substring(i, i))) {
+                keyIsNotValid = true;
+                break;
+            }
+        }
+
+        if (keyIsNotValid) System.err.println("invalid key");
+
+        String extra = "";
+        if (outputFileName == null) {
+            extra = "1";
+        }
+
         try {
-            encoder.code(inputFileName, outputFileName, key);
+            Encoder.code(inputFileName, outputFileName + extra, key.toCharArray());
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
