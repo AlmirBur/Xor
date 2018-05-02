@@ -18,7 +18,7 @@ public class EncoderLauncher {
     @Argument(required = true, usage = "Name of input file")
     private String inputFileName;
 
-    @Option(name = "-o", required = true, usage = "Name of output file")
+    @Option(name = "-o", usage = "Name of output file")
     private String outputFileName;
 
     public static void main(String[] args) {
@@ -37,7 +37,7 @@ public class EncoderLauncher {
             return;
         }
 
-        if (cKey == null && dKey == null) System.err.println("invalid key");
+        if (cKey == null && dKey == null) throw new IllegalArgumentException("invalid key");
 
         String key;
         if (cKey != null) {
@@ -48,13 +48,13 @@ public class EncoderLauncher {
 
         boolean keyIsNotValid = false;
         for (int i = 0; i < key.length(); i++) {
-            if (!"0123456789ABCDEF".contains(key.substring(i, i))) {
+            if (!"0123456789ABCDEF".contains(key.substring(i, i + 1))) {
                 keyIsNotValid = true;
                 break;
             }
         }
 
-        if (keyIsNotValid) System.err.println("invalid key");
+        if (keyIsNotValid) throw new IllegalArgumentException("invalid key");
 
         String extra = "";
         if (outputFileName == null) {
