@@ -11,16 +11,16 @@ class EncoderTest {
 
     @Test
     void codeTest() {
-        char[] key;
+        String key;
         try {
-            key = new char[] {'1', '2', 'F'};
-            code("files/input", "files/output", key);
-            code("files/output", "files/check", key);
+            key = "12F";
+            code("files/input", "files/output", key.getBytes());
+            code("files/output", "files/check", key.getBytes());
             assertFileContent("files/input", "files/check");
 
-            key = new char[] {'A', '3'};
-            code("files/input", "files/output", key);
-            code("files/output", "files/check", key);
+            key = "A3";
+            code("files/input", "files/output", key.getBytes());
+            code("files/output", "files/check", key.getBytes());
             assertFileContent("files/input", "files/check");
         } catch (IOException e) {
             System.err.println(e.getMessage());

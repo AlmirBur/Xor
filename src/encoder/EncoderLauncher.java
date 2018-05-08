@@ -67,7 +67,7 @@ public class EncoderLauncher {
         }
 
         try {
-            code(inputFileName, outputFileName, key.toCharArray());
+            code(inputFileName, outputFileName, key.getBytes());
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
