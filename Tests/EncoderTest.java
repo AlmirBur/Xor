@@ -28,8 +28,8 @@ class EncoderTest {
     }
 
     private void assertFileContent(String name1, String name2) throws IOException {
-        RandomAccessFile reader1 = new RandomAccessFile(name1, "rw");
-        RandomAccessFile reader2 = new RandomAccessFile(name2, "rw");
+        RandomAccessFile reader1 = new RandomAccessFile(name1, "r");
+        RandomAccessFile reader2 = new RandomAccessFile(name2, "r");
         String actualContent1 = reader1.readLine();
         String actualContent2 = reader2.readLine();
         assertEquals(actualContent1, actualContent2);
