@@ -1,11 +1,13 @@
-package Encoder;
+package encoder;
 
 import org.kohsuke.args4j.Argument;
-import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.Option;
 
 import java.io.IOException;
+
+import static encoder.Encoder.code;
 
 public class EncoderLauncher {
 
@@ -37,7 +39,9 @@ public class EncoderLauncher {
             return;
         }
 
-        if (cKey == null && dKey == null) throw new IllegalArgumentException("invalid key");
+        if (cKey == null && dKey == null) {
+            System.err.println("invalid key");
+        }
 
         String key;
         if (cKey != null) {
@@ -54,15 +58,16 @@ public class EncoderLauncher {
             }
         }
 
-        if (keyIsNotValid) throw new IllegalArgumentException("invalid key");
+        if (keyIsNotValid) {
+            System.err.println("invalid key");
+        }
 
-        String extra = "";
         if (outputFileName == null) {
-            extra = "1";
+            outputFileName = inputFileName + "1";
         }
 
         try {
-            Encoder.code(inputFileName, outputFileName + extra, key.toCharArray());
+            code(inputFileName, outputFileName, key.toCharArray());
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
