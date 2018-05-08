@@ -10,21 +10,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EncoderTest {
 
     @Test
-    void codeTest() {
+    void codeTest() throws IOException {
         String key;
-        try {
-            key = "12F";
-            code("files/input", "files/output", key.getBytes());
-            code("files/output", "files/check", key.getBytes());
-            assertFileContent("files/input", "files/check");
-
-            key = "A3";
-            code("files/input", "files/output", key.getBytes());
-            code("files/output", "files/check", key.getBytes());
-            assertFileContent("files/input", "files/check");
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
+        key = "12F";
+        code("files/input", "files/output", key.getBytes());
+        code("files/output", "files/check", key.getBytes());
+        assertFileContent("files/input", "files/check");
+        key = "A3";
+        code("files/input", "files/output", key.getBytes());
+        code("files/output", "files/check", key.getBytes());
+        assertFileContent("files/input", "files/check");
     }
 
     private void assertFileContent(String name1, String name2) throws IOException {
