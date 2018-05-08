@@ -41,6 +41,7 @@ public class EncoderLauncher {
 
         if (cKey == null && dKey == null) {
             System.err.println("invalid key");
+            return;
         }
 
         String key;
@@ -60,6 +61,7 @@ public class EncoderLauncher {
 
         if (keyIsNotValid) {
             System.err.println("invalid key");
+            return;
         }
 
         if (outputFileName == null) {
